@@ -14,19 +14,23 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 source: ./docs
-title: Pointing in VR
-email: mhb558@alumni.ku.dk
+title: "Pointing in VR"
+author:
+  name: "Tor-Salve Dalsgaard"
+  email: "mhb558@ku.dk"
+  bio: A hompage to share some research data, gathered for a thesis project. Also contains some code that analyzes the data.
 description: >- # this means to ignore newlines until "baseurl:"
   A hompage to share some research data, gathered for a thesis project. 
   Also contains some code that analyzes the data.
 baseurl: "/pointing-in-vr" # the subpath of your site, e.g. /blog
-url: "https://torsalve.github.io/pointing-in-vr/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://torsalve.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: TorSalve
 github_username: TorSalve
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-minimal
+# theme: jekyll-theme-minimal
+theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
 
