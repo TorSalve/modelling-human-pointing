@@ -29,8 +29,8 @@ github_username: TorSalve
 
 # Build settings
 markdown: kramdown
-# theme: jekyll-theme-minimal
-theme: minimal-mistakes-jekyll
+theme: jekyll-theme-minimal
+# theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
 
