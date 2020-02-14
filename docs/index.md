@@ -11,7 +11,9 @@ title: Modelling human pointing
 # The collection
 To archive the goal of modelling the natural human pointing movement, we build an application that utilizes VR to collect data from participants. The application is build in Unity 2019.2.6f1 and available in this repositiory. Unfortunately we can not provide the complete application, because of copyright reasons. Please add [RootMotion's Final IK](https://assetstore.unity.com/packages/tools/animation/final-ik-14290) to the Assets folder in the Unity project to reconstruct the application.
 
-## Resources
+<button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/tree/master/application/VR-pointing-collection-application', '_blank')" style="cursor: pointer">Check out the application</button>
+
+#### Resources
 - [HTC Vive Tutorial for Unity](https://www.raywenderlich.com/9189-htc-vive-tutorial-for-unity)
 
 # The data
