@@ -1,4 +1,0 @@
----
-title: Data
-permalink: /data/
----
