@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 source: ./docs
-title: "Pointing in VR"
+title: "Modelling human pointing"
 author:
   name: "Tor-Salve Dalsgaard"
   email: "mhb558@ku.dk"
@@ -29,8 +29,8 @@ github_username: TorSalve
 
 # Build settings
 markdown: kramdown
-# theme: jekyll-theme-minimal
-theme: minimal-mistakes-jekyll
+theme: jekyll-theme-minimal
+# theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
 
