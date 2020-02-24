@@ -4,7 +4,9 @@
 title: Modelling human pointing
 ---
 
-# Abstract
+# Modelling human pointing
+
+## Abstract
 
 Pointing is a popular selection technique for VR applications, because pointing is a natural human gesture used to reference objects. Humans are inherently inaccurate when pointing, since it usually is supplemented with other means of communication. Efforts have been undertaken to correct these inaccuracies, for instance by aiding users with visual feedback using a cursor showing where they point. These methods are not always desirable nor always possible to be used, also because such cursors counteract the natural feeling of pointing and thus can break immersion.
 
@@ -16,7 +18,7 @@ __*Keywords*__ - pointing, machine learning, natural human movement, target sele
 
 <button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/blob/master/thesis.pdf', '_blank')" style="cursor: pointer">Full thesis (.pdf)</button>
 
-# The collection
+## The collection
 To archive the goal of modelling the natural human pointing movement, we build an application that utilizes VR to collect data from participants. The application is build in Unity 2019.2.6f1 and available in this repositiory. Unfortunately we can not provide the complete application, because of copyright reasons. Please add [RootMotion's Final IK](https://assetstore.unity.com/packages/tools/animation/final-ik-14290) to the Assets folder in the Unity project to reconstruct the application.
 
 <button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/tree/master/application/VR-pointing-collection-application', '_blank')" style="cursor: pointer">Check out the application</button>
@@ -24,9 +26,9 @@ To archive the goal of modelling the natural human pointing movement, we build a
 #### Resources
 - [HTC Vive Tutorial for Unity](https://www.raywenderlich.com/9189-htc-vive-tutorial-for-unity)
 
-# The data
+## The data
 
-## Raw collected data
+### Raw collected data
 The raw data constists of the collected data. We collect the human pointing movement in 50Hz.
 For this experiment we want to collect data, that expresses the movement of a participant, while pointing at a known target. The logs are saved as .csv-files and to avoid saving for instance the participant data repetitively, the data is scattered across different files. All positions are in logged in a y-up fashion.
 
@@ -41,18 +43,18 @@ For this experiment we want to collect data, that expresses the movement of a pa
 <button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/tree/master/data/raw_data', '_blank')" style="cursor: pointer">Check out the raw data</button>
 
 
-## Normalized data
+### Normalized data
 
 To make the data comparable, we want to normalize it in some meaningful ways. Without normalization, the data does not compare well, since participants have differently proportioned bodies and might also have slightly different starting positions. These differences are expected, but nevertheless is it still necessary to account for them, since else there might be unrecognized patterns in the data, which may have contributed to a better model if recognized.
 
-### Normalizing by participant height
+#### Normalizing by participant height
 To account for differences in the participants body proportions, we want to normalize the data by some known measure: the height. We do this by defining a function for each participant:
 
 ![Equation 1](https://raw.githubusercontent.com/TorSalve/pointing-in-vr/master/docs/_images/norm_height.png "Equation 1")
 
 where *v* is some positional value in the dataset and *p_v* is the participant *p* that produced the value *v*. This means that these functions transform the positional data to a percentage of the participants height, ie. *f_p(p\[Height\]) = 1*, but note that values may become larger than *1*, eg. when the participant lifts their index finger above their head. This makes data points comparable across participants. There might still be proportional differences, in eg. shoulder height or arm length, but it is difficult to find a normalization that accounts for all the different proportions.
 
-### Moving the starting point
+#### Moving the starting point
 Even though participants where asked to stand on the same spot at the beginning of each repetition, it is unrealistic to expect the same exact starting position in each sample. Thus we want to move the starting point to a more adequate position, which also might not be perfect, but again has better comparability. The basic idea is to move the movement pattern, such that the starting point is centered around (0,0,0) (origin). Intuitively this means that we want to move the participants feet to stand on the origin. But since we do not record the position of the feet, we need to take the next best known position: the head/HMD, since that position is assumed to be centered over the participants feet. We also assume the participant to stand straight at each repetition. When normalizing the data we can use these two assumptions to say that the *x* and *z* values of the feet center-position is equal to the head positions *x* and *z* values. Only the *y* values are different. Thus we can construct a function to rectify the *x* and *z* values:
 
 ![Equation 2](https://raw.githubusercontent.com/TorSalve/pointing-in-vr/master/docs/_images/norm_starting.png "Equation 2")
@@ -65,7 +67,7 @@ where *e* is an endpoint and *s_e* is the starting point of the pointing movemen
 *Note that the data format is different than the raw data, but essentially contains the same data.*
 
 
-# The analysis
+## The analysis
 ![Figure 3: The target grid, where the colors of the target correspond to their average distance to the predicted target (using SVM), for all folds. The red cross is the participant starting position. Clearly, the target closest to the participant is identified as an outlier. [m]](https://raw.githubusercontent.com/TorSalve/pointing-in-vr/master/docs/_images/plot_distance_targets_SVM.png "Figure 3: The target grid, where the colors of the target correspond to their average distance to the predicted target (using SVM), for all folds. The red cross is the participant starting position. Clearly, the target closest to the participant is identified as an outlier. [m]")
 <p style="text-align: center;"><i>Figure 3: The target grid, where the colors of the target correspond to their average distance to the predicted target (using SVM), for all folds. The red cross is the participant starting position. Clearly, the target closest to the participant is identified as an outlier. [m]</i></p>
 
@@ -82,7 +84,7 @@ Classification and regression are very different approaches and very much depend
 Generally is the collected dataset not well suited for the regression task, both because of the study setup and the relatively small number of samples. In the study setup, we use 27 different fixed target positions, which might introduce a bias in regression algorithms, meaning that this model would most likely not work well on samples where humans point at targets, that are not one of those 27. To make a model that can handle these unseen targets well, we need an extension of the existing dataset that includes samples with targets at (relatively) random positions. A challenge for constructing such a dataset is that we need many more datapoints, to make sure that the randomly positioned targets are evenly distributed. Additionally there are many small optimizations and assumptions for such a dataset, since we work with humans and their individual differences. For instance do we need to limit the space in which a target can appear, for instance since humans normally do not point backwards. But we can use the existing dataset for assessing whether we can observe an effect, which we can. This means that we now know that we can build a model for human pointing based on properties of human movement. 
 
 
-# Conclusion
+## Conclusion
 This work focuses on natural human pointing movement. Current selection techniques do not allow for both naturalness and selection of distant targets at the same time. Both properties are desirable in VR. We have thus build a model for a selection technique, that both is natural and supports selection of distant targets.
 
 We have collected, analysed and modelled the natural human pointing movement. The resulting model is based on a well performing machine learning model, that predicts target positions based on the collected human pointing movement. The machine learning model encapsulates different factors important to the human pointing, but is limited to the described setup. We theorize that, since we can construct a well performing model, we can extend it to work with a more general setup.
