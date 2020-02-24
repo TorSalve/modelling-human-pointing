@@ -4,7 +4,7 @@
 title: Modelling human pointing
 ---
 
-# Modelling human pointing
+# Modelling natural human pointing for target prediction in VR
 
 ## Abstract
 
