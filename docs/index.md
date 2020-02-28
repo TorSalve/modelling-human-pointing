@@ -16,12 +16,12 @@ We have constructed a model that is able to describe characteristics of natural 
 
 __*Keywords*__ - pointing, machine learning, natural human movement, target selection
 
-<button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/blob/master/thesis.pdf', '_blank')" style="cursor: pointer">Full thesis (.pdf)</button>
+<button name="button" onclick="window.open('https://github.com/TorSalve/modelling-human-pointing/blob/master/thesis.pdf', '_blank')" style="cursor: pointer">Full thesis (.pdf)</button>
 
 ## The collection
 To archive the goal of modelling the natural human pointing movement, we build an application that utilizes VR to collect data from participants. The application is build in Unity 2019.2.6f1 and available in this repositiory. Unfortunately we can not provide the complete application, because of copyright reasons. Please add [RootMotion's Final IK](https://assetstore.unity.com/packages/tools/animation/final-ik-14290) to the Assets folder in the Unity project to reconstruct the application.
 
-<button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/tree/master/application/VR-pointing-collection-application', '_blank')" style="cursor: pointer">Check out the application</button>
+<button name="button" onclick="window.open('https://github.com/TorSalve/modelling-human-pointing/tree/master/application/VR-pointing-collection-application', '_blank')" style="cursor: pointer">Check out the application</button>
 
 #### Resources
 - [HTC Vive Tutorial for Unity](https://www.raywenderlich.com/9189-htc-vive-tutorial-for-unity)
@@ -32,7 +32,7 @@ To archive the goal of modelling the natural human pointing movement, we build a
 The raw data constists of the collected data. We collect the human pointing movement in 50Hz.
 For this experiment we want to collect data, that expresses the movement of a participant, while pointing at a known target. The logs are saved as .csv-files and to avoid saving for instance the participant data repetitively, the data is scattered across different files. All positions are in logged in a y-up fashion.
 
-![Example of a visualization of the collected movement data. Each line represents a sample, while the slightly thicker red line is the final position of the arm. Each point on the line is the position of a rigidbody tracked. This movement took 1.8 seconds to complete.](https://raw.githubusercontent.com/TorSalve/pointing-in-vr/master/docs/_images/plot_projection_3_70_no_target.png "Example of a visualization of the collected movement data. Each line represents a sample, while the slightly thicker red line is the final position of the arm. Each point on the line is the position of a rigidbody tracked. This movement took 1.8 seconds to complete.")
+![Example of a visualization of the collected movement data. Each line represents a sample, while the slightly thicker red line is the final position of the arm. Each point on the line is the position of a rigidbody tracked. This movement took 1.8 seconds to complete.](https://raw.githubusercontent.com/TorSalve/modelling-human-pointing/master/docs/_images/plot_projection_3_70_no_target.png "Example of a visualization of the collected movement data. Each line represents a sample, while the slightly thicker red line is the final position of the arm. Each point on the line is the position of a rigidbody tracked. This movement took 1.8 seconds to complete.")
 <p style="text-align: center;"><i>Figure 1: Example of a visualization of the collected movement data. Each line represents a sample, while the slightly thicker red line is the final position of the arm. Each point on the line is the position of a rigidbody tracked. This movement took 1.8 seconds to complete.</i></p>
 
 - The participant data is saved to a .csv-file, where each line represents one participant, identified with an unique integer.
@@ -40,7 +40,7 @@ For this experiment we want to collect data, that expresses the movement of a pa
 - The calibration task is logged by taking a sample, when the participant triggers the calibration. Thus the resulting calibration .csv-file consists of three lines, one for each sample created in the calibration task.
 - The target the participant is asked to point at is the denoted the true target. This target is logged in a separate .csv-file for each participant. In this file each line represents the position of a true target and has an identifier, that fits to a collection. 
 
-<button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/tree/master/data/full', '_blank')" style="cursor: pointer">Check out the full dataset</button>
+<button name="button" onclick="window.open('https://github.com/TorSalve/modelling-human-pointing/tree/master/data/full', '_blank')" style="cursor: pointer">Check out the full dataset</button>
 
 
 ### Normalized data
@@ -50,23 +50,26 @@ To make the data comparable, we want to normalize it in some meaningful ways. Wi
 #### Normalizing by participant height
 To account for differences in the participants body proportions, we want to normalize the data by some known measure: the height. We do this by defining a function for each participant:
 
-![Equation 1](https://raw.githubusercontent.com/TorSalve/pointing-in-vr/master/docs/_images/norm_height.png "Equation 1")
+![Equation 1](https://raw.githubusercontent.com/TorSalve/modelling-human-pointing/master/docs/_images/norm_height.png "Equation 1")
 
 where *v* is some positional value in the dataset and *p_v* is the participant *p* that produced the value *v*. This means that these functions transform the positional data to a percentage of the participants height, ie. *f_p(p\[Height\]) = 1*, but note that values may become larger than *1*, eg. when the participant lifts their index finger above their head. This makes data points comparable across participants. There might still be proportional differences, in eg. shoulder height or arm length, but it is difficult to find a normalization that accounts for all the different proportions.
 
 #### Moving the starting point
 Even though participants where asked to stand on the same spot at the beginning of each repetition, it is unrealistic to expect the same exact starting position in each sample. Thus we want to move the starting point to a more adequate position, which also might not be perfect, but again has better comparability. The basic idea is to move the movement pattern, such that the starting point is centered around (0,0,0) (origin). Intuitively this means that we want to move the participants feet to stand on the origin. But since we do not record the position of the feet, we need to take the next best known position: the head/HMD, since that position is assumed to be centered over the participants feet. We also assume the participant to stand straight at each repetition. When normalizing the data we can use these two assumptions to say that the *x* and *z* values of the feet center-position is equal to the head positions *x* and *z* values. Only the *y* values are different. Thus we can construct a function to rectify the *x* and *z* values:
 
-![Equation 2](https://raw.githubusercontent.com/TorSalve/pointing-in-vr/master/docs/_images/norm_starting.png "Equation 2")
+![Equation 2](https://raw.githubusercontent.com/TorSalve/modelling-human-pointing/master/docs/_images/norm_starting.png "Equation 2")
 
 where *e* is an endpoint and *s_e* is the starting point of the pointing movement that resulted in the endpoint *e*.
 
 
-<button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/tree/master/data/normalized', '_blank')" style="cursor: pointer">Check out the normalized data</button>
+<button name="button" onclick="window.open('https://github.com/TorSalve/modelling-human-pointing/tree/master/data/normalized', '_blank')" style="cursor: pointer">Check out the normalized data</button>
+
+
+<button name="button" onclick="window.open('https://github.com/TorSalve/modelling-human-pointing/tree/master/data/', '_blank')" style="cursor: pointer">Find a description of the <i>.csv</i>-files contents</button>
 
 
 ## The analysis
-![Figure 3: The target grid, where the colors of the target correspond to their average distance to the predicted target (using SVM), for all folds. The red cross is the participant starting position. Clearly, the target closest to the participant is identified as an outlier. [m]](https://raw.githubusercontent.com/TorSalve/pointing-in-vr/master/docs/_images/plot_distance_targets_SVM.png "Figure 3: The target grid, where the colors of the target correspond to their average distance to the predicted target (using SVM), for all folds. The red cross is the participant starting position. Clearly, the target closest to the participant is identified as an outlier. [m]")
+![Figure 3: The target grid, where the colors of the target correspond to their average distance to the predicted target (using SVM), for all folds. The red cross is the participant starting position. Clearly, the target closest to the participant is identified as an outlier. [m]](https://raw.githubusercontent.com/TorSalve/modelling-human-pointing/master/docs/_images/plot_distance_targets_SVM.png "Figure 3: The target grid, where the colors of the target correspond to their average distance to the predicted target (using SVM), for all folds. The red cross is the participant starting position. Clearly, the target closest to the participant is identified as an outlier. [m]")
 <p style="text-align: center;"><i>Figure 3: The target grid, where the colors of the target correspond to their average distance to the predicted target (using SVM), for all folds. The red cross is the participant starting position. Clearly, the target closest to the participant is identified as an outlier. [m]</i></p>
 
 We have constructed a model based on human movement data. The data was sanity checked and we have found the need for flexibility in the model, such that it can accommodate differences in human pointing. Additionally has the data been corrected for variations that are not caused by the movement, but rather by the study setup or the human body.
