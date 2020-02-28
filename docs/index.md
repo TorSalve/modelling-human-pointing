@@ -40,7 +40,7 @@ For this experiment we want to collect data, that expresses the movement of a pa
 - The calibration task is logged by taking a sample, when the participant triggers the calibration. Thus the resulting calibration .csv-file consists of three lines, one for each sample created in the calibration task.
 - The target the participant is asked to point at is the denoted the true target. This target is logged in a separate .csv-file for each participant. In this file each line represents the position of a true target and has an identifier, that fits to a collection. 
 
-<button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/tree/master/data/raw_data', '_blank')" style="cursor: pointer">Check out the raw data</button>
+<button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/tree/master/data/full', '_blank')" style="cursor: pointer">Check out the full dataset</button>
 
 
 ### Normalized data
@@ -63,8 +63,6 @@ where *e* is an endpoint and *s_e* is the starting point of the pointing movemen
 
 
 <button name="button" onclick="window.open('https://github.com/TorSalve/pointing-in-vr/tree/master/data/normalized', '_blank')" style="cursor: pointer">Check out the normalized data</button>
-
-*Note that the data format is different than the raw data, but essentially contains the same data.*
 
 
 ## The analysis
