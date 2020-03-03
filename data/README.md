@@ -44,9 +44,9 @@ The participant ID (**pid**) is used throughout the different files. It describe
 
 ### collections.csv
 
-This file contains the most interesting part of the collected data. Each line in the file is a sample of the participants body position. Each repetition is logged with 50Hz, ie. a samples is created every 0.02 seconds. One sample consists of the positions and orientations of seven fix-points on the participants body: the index finger, hand, forearm, upper arm, right shoulder, HMD and left shoulder. A collection consists of a number of samples and is identified by the combination of participant ID (**pid**) and collection ID (**cid**). Note that only the combination is unique, while the participant ID is repeated across collections and the collection ID is repeated across participants. The number of samples in a collection varies based on the time a participant needed to conclude the repetition.
+This file contains the most interesting part of the collected data. Each line in the file is a sample of the participants posture. Each repetition is logged with 50Hz, ie. a samples is created every 0.02 seconds. One sample consists of the positions and orientations of seven fix-points on the participants body: the index finger, hand, forearm, upper arm, right shoulder, HMD and left shoulder. A collection consists of a number of samples and is identified by the combination of participant ID (**pid**) and collection ID (**cid**). Note that only the combination is unique, while the participant ID is repeated across collections and the collection ID is repeated across participants. The number of samples in a collection varies based on the time a participant needed to conclude the repetition.
 
-We define the notion of an endpoint as the last sample in each collection, ie. the body position, when a participant pressed the "stop"-trigger on the controller. In the *endpoints*-dataset only these samples are included, while the *full*-dataset contains all collected samples.
+We define the notion of an endpoint as the last sample in each collection, ie. the posture, when a participant pressed the "stop"-trigger on the controller. In the *endpoints*-dataset only these samples are included, while the *full*-dataset contains all collected samples.
 
 *.csv columns*
 * **pid** - ID of the participant, that performed the calibration
@@ -99,3 +99,13 @@ At last, the *targets.csv*-file contains information about which target the part
 * **cid** - collection ID
 * **pid** - participant ID
 * **target.X**, **target.Y**, **target.Z** - the position of the target, see also the target grid in the beginning
+
+## normalization
+
+Each sample in the collections contains positional data on the participants movement. The data points are not compareable across participants, due to different body proportions.
+
+One way of normalizing the data is thus to divide the positional data by the participants height to convert the data points from meters to a percentage of height. This is still an approximation, but works better than not doing anything at all. 
+
+Although the participants were instructed to stand on a certain position, we can not expect that to be similar across participants or even across repetitions. Therefore we reset the pointing movement such that the participants stands on the origin.
+
+We provide a full version of the normalized data and an endpoints version of it.
