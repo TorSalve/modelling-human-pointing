@@ -14,7 +14,9 @@ The participant is asked to perform two different tasks; a calibration task and 
 
 In the collection task, the participant is asked to point at a shown target. They point at each target five times, for a total of 135 repetitions. Before each repetition, the participant is asked to put the arm in a predefined position. The participant now presses button A to start the repetition. This makes a target appear, which is to be pointed at. When the participant is confident that they point at the target, they press button B. This concludes one repetition.
 
-The design of the task aims to promote natural pointing movement.
+The design of the task aims to promote natural pointing movement. The participant is not supposed to touch the targets, but rather point at them as if they would point the target out to a friend. Since this is a data collection study and not an emperical study, there is no indicator/cursor to aim with. The participant sees a virtual hand that follows their actual hands movement.
+
+<img src="https://raw.githubusercontent.com/TorSalve/modelling-human-pointing/master/docs/_images/Joanna_inside.gif" width="500" title="Depiction of the VR application, while the collection task is running"/>
 
 ## the data
 
